@@ -484,119 +484,13 @@
                     <div class="forecast-section">
                         <h3 class="forecast-title">5-Day Forecast</h3>
                         <div class="forecast-container">
-                            ${dailyForecast.map(day => `
-                                <div class="forecast-card">
-                                    <div class="forecast-day">${day.day}</div>
-                                    <img src="${day.icon}" alt="${day.description}" class="forecast-icon">
-                                    <div class="forecast-temp">
-                                        <span class="forecast-max">${day.maxTemp}°</span>
-                                        <span class="forecast-min">${day.minTemp}°</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                    
-                    <div class="unit-toggle">
-                        <button class="unit-btn ${units === 'metric' ? 'active' : ''}" data-unit="metric">°C</button>
-                        <button class="unit-btn ${units === 'imperial' ? 'active' : ''}" data-unit="imperial">°F</button>
-                    </div>
-                `;
-                
-                appBody.innerHTML = html;
-                
-                // Add event listeners to unit buttons
-                document.querySelectorAll('.unit-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        units = btn.dataset.unit;
-                        fetchWeather(currentLocation);
-                    });
-                });
-            }
-            
-            // Process forecast data to get daily forecasts
-            function processForecastData(forecastList) {
-                const dailyForecasts = [];
-                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                
-                // Group by day
-                const daysData = {};
-                
-                forecastList.forEach(item => {
-                    const date = new Date(item.dt * 1000);
-                    const day = date.getDay();
-                    
-                    if (!daysData[day]) {
-                        daysData[day] = {
-                            temps: [],
-                            icons: [],
-                            descriptions: []
-                        };
-                    }
-                    
-                    daysData[day].icons.push(item.weather[0].icon);
-                    daysData[day].descriptions.push(item.weather[0].description);
-                });
-                
-                // Get next 5 days
-                const today = new Date().getDay();
-                for (let i = 1; i <= 5; i++) {
-                    const nextDay = (today + i) % 7;
-                    if (daysData[nextDay]) {
-                        const dayData = daysData[nextDay];
-                        const maxTemp = Math.round(Math.max(...dayData.temps));
-                        const minTemp = Math.round(Math.min(...dayData.temps));
-                        
-                        // Get most frequent icon for the day
-                        const iconCounts = {};
-                        dayData.icons.forEach(icon => {
-                            iconCounts[icon] = (iconCounts[icon] || 0) + 1;
-                        });
-                        const mostFrequentIcon = Object.keys(iconCounts).reduce((a, b) => 
-                            iconCounts[a] > iconCounts[b] ? a : b
-                        );
-                        
-                        dailyForecasts.push({
-                            day: day
-                
-                
-                            icon: gen(mostFrequentIcon),
-                            descripta.descriptions[0
-                    }
-                }
-                
-                return dailyForecasts;
-            }
-            
-            // Get weather icon based on OpenWeatherMap icon code
-            function getWeatherIcon(iconCode) {
-                const iconMap = {
-                    '01d': 'https://openweathermap.org/img/wn/01d@2x.png',
-                    '01n': 'https://openweathermap.org/img/wn/01n@2x.png',
-                    '02d': 'https://openweathermap.org/img/wn/02d@2x.png',
-                    '02n': 'https://openweathermap.org/img/wn/02n@2x.png',
-                    '03d': 'https://openweathermap.org/img/wn/03d@2x.png',
                     '03n': 'https://openweathermap.org/img/wn/03n@2x.png',
                     '04d': 'https://openweathermap.org/img/wn/04d@2x.png',
-                    '04n': 'https://openweathermap.org/img/wn/04n@2x.png',
-                    '09d': 'https://openweathermap.org/img/wn/09d@2x.png',
-                    '09n': 'https://openweathermap.org/img/wn/09n@2x.png',
-                    '10d': 'https://openweathermap.org/img/wn/10d@2x.png',
-                    '10n': 'https://openweathermap.org/img/wn/10n@2x.png',
-                    '11d': 'https://openweathermap.org/img/wn/11d@2x.png',
-                    '11n': 'https://openweathermap.org/img/wn/11n@2x.png',
-                    '13d': 'https://openweathermap.org/img/wn/13d@2x.png',
-                    '13n': 'https://openweathermap.org/img/wn/13n@2x.png',
-                    '50d': 'https://openweathermap.org/img/wn/50d@2x.png',
-                    '50n': 'https://openweathermap.org/img/wn/50n@2x.png'
-                };
-                
-                return iconMap[iconCode] || 'https://openweathermap.org/img/wn/01d@2x.png';
+              return iconMap[iconCode] || 'https://openweathermap.org/img/wn/01d@2x.png';
             }
             
             // Show loading state
-            function showLoading() {
-                appBody.innerHTML = `
+
                     <div class="loading">
                         <div>
                             <i class="fas fa-spinner fa-spin"></i> Loading weather data...
